@@ -1,4 +1,9 @@
 Cloudocs::Application.routes.draw do
+  get "doc/index"
+  get "doc/login"
+  get "doc/sign_up"
+  get "doc/create"
+  get "doc/edit"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,13 @@
+<h1>Create new file</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @file_stat, :url => {:action => 'create'} do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.submit "Create", class: "btn" %>
+    <% end %>
+  </div>
+</div>

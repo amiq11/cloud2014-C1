@@ -16,7 +16,7 @@ class EditorController < ApplicationController
   end
 
   def create
-    attr = params.require(:file_stat).permit(:name, :path, :password, :user_id, :private, :last_update)
+    attr = params.require(:file_stat).permit(:name)
     @file_stat = FileStat.create(attr)
     if @file_stat.save
       redirect_to editor_index_path, :notice => "Created!"

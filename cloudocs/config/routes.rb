@@ -1,9 +1,12 @@
 Cloudocs::Application.routes.draw do
+  root to: "top#index"
   get "editor/index"
   get "editor/login"
   get "editor/sign_up"
   get "editor/edit"
   get "editor/create"
+  resource :session
+  resource :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,5 +1,7 @@
 <h1>Create new file</h1>
 
+<p> <%= flash[:notice] %> </p>
+
 <div class="row">
   <div class="span6 offset3">
     <%= form_for @file_stat, :url => {:action => 'create'} do |f| %>

@@ -21,6 +21,7 @@ class EditorController < ApplicationController
     if @file_stat.save
       redirect_to editor_index_path, :notice => "Created!"
     else
+      flash.now[:notice] = "Failed to create."
       render "new"
     end
   end

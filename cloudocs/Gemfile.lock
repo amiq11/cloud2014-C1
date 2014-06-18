@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ace-rails-ap (2.0.1)
     actionmailer (4.0.5)
       actionpack (= 4.0.5)
       mail (~> 2.5.4)
@@ -107,6 +108,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ace-rails-ap
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails

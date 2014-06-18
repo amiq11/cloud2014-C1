@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  path: MyString
-  password: MyString
+  name: test.txt
+  path: /home/akerue/Desktop/test.txt
+  password: password
   user_id: 1
   private: false
   last_update: 2014-06-13 17:48:43
 
 two:
-  name: MyString
-  path: MyString
-  password: MyString
+  name: test2.txt
+  path: /home/akerue/Desktop/test2.txt
+  password: password
   user_id: 1
   private: false
   last_update: 2014-06-13 17:48:43

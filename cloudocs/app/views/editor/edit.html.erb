@@ -1,2 +1,9 @@
-<h1>Editor#edit</h1>
-<p>Find me in app/views/editor/edit.html.erb</p>
+<h1>Edit <%= @file.name -%></h1>
+
+<div id="editor-div" style="height: 500px; width: 500px"><%= @body -%></div>
+<% #TODO: Syntax highlight and Editor %>
+<script>
+	window.onload = function() {
+		var editor = ace.edit("editor-div");
+	};
+</script>

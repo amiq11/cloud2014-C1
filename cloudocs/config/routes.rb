@@ -5,6 +5,9 @@ Cloudocs::Application.routes.draw do
   get "editor/sign_up"
   get "editor/edit"
   get "editor/create"
+  get "api/get_file"
+  get "api/payload"
+  post "api/payload" => "api#payload"
   resource :session
   resource :users
   # The priority is based upon order of creation: first created -> highest priority.

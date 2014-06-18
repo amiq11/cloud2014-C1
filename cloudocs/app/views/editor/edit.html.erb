@@ -2,26 +2,46 @@
 
 <p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
 
-<div id="editor-div" style="height: 500px; width: 500px"><%= @body -%></div>
-<% #TODO: Syntax highlight and Editor %>
+<% if File.readable? @file.path %>
+	<div id="editor-div" style="height: 500px; width: 500px"><%= File.open(@file.path, "r").read -%></div>
+	<% #TODO: Syntax highlight and Editor %>
 
-<%= form_tag('/editor/save/' + @file.id.to_s) do%>
-	<%= text_area_tag("text") %>
-	<%= submit_tag("Save", :name=>"Save") %>
-	<%= submit_tag("Cancel", :name=>"Cancel") %>
+	<%= form_tag('/editor/save/' + @file.id.to_s) do%>
+		<%= text_area_tag("text") %>
+		<%= submit_tag("Save", :name=>"Save", :onClick=>"set_flag();") %>
+		<%= submit_tag("Cancel", :name=>"Cancel") %>
+	<% end %>
+
+	<% ext = @file.name.split(".")[-1] %>
+<% else %>
+	<p>This is not file!</p>
 <% end %>
 
-<script>
+<%= javascript_tag do%>
+	var flag = false;
+
 	window.onload = function() {
 		document.getElementById('text').style.display = 'none';
 		var editor = ace.edit("editor-div");
 		editor.setTheme("ace/theme/twilight");
-		editor.getSession().setMode("ace/mode/html");
+		editor.getSession().setMode("ace/mode/<%= ext %>");
 		editor.setKeyboardHandler("ace/keyboard/vim");
 
 		var buffer;
 		editor.getSession().on("change", function(){
-			document.getElementById( 'text' ).value = editor.getSession().getValue();
+			document.getElementById('text').value = editor.getSession().getValue();
 		});
+
 	};
-</script>
+
+	function set_flag() {
+		flag = true;
+	};
+
+
+	window.onbeforeunload = function() {
+		if (flag == false) {
+			return "本当に離れますか？";
+		}
+	};
+<% end %>

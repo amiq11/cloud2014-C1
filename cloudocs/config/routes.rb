@@ -4,6 +4,7 @@ Cloudocs::Application.routes.draw do
   get "editor/sign_up"
   get "editor/edit/:id" => "editor#edit"
   get "editor/create"
+  post "editor/save/:id" => "editor#save"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

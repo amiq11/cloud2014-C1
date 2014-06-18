@@ -1,9 +1,27 @@
 <h1>Edit <%= @file.name -%></h1>
 
+<p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
+
 <div id="editor-div" style="height: 500px; width: 500px"><%= @body -%></div>
 <% #TODO: Syntax highlight and Editor %>
+
+<%= form_tag('/editor/save/' + @file.id.to_s) do%>
+	<%= text_area_tag("text") %>
+	<%= submit_tag("Save", :name=>"Save") %>
+	<%= submit_tag("Cancel", :name=>"Cancel") %>
+<% end %>
+
 <script>
 	window.onload = function() {
+		document.getElementById('text').style.display = 'none';
 		var editor = ace.edit("editor-div");
+		editor.setTheme("ace/theme/twilight");
+		editor.getSession().setMode("ace/mode/html");
+		editor.setKeyboardHandler("ace/keyboard/vim");
+
+		var buffer;
+		editor.getSession().on("change", function(){
+			document.getElementById( 'text' ).value = editor.getSession().getValue();
+		});
 	};
 </script>

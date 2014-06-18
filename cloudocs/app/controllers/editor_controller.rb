@@ -1,10 +1,12 @@
 class EditorController < ApplicationController
+  Save_dir = "/mnt/cloudocs-volume/documents/"
+
   def index
   end
 
   def login
   end
-  
+
   def new
     @file_stat = FileStat.new
   end
@@ -19,9 +21,17 @@ class EditorController < ApplicationController
     attr = params.require(:file_stat).permit(:name)
     @file_stat = FileStat.create(attr)
     if @file_stat.save
-      redirect_to editor_index_path, :notice => "Created!"
+      begin
+        f = open(Save_dir + @file_stat.name, "w")
+        f.close
+        redirect_to editor_index_path, :notice => "Created!"
+      rescue
+        FileStat.find(:last, :conditions => {:name => @file_stat.name}).destroy
+        flash.now[:notice] = "Failed to create new file entity."
+        render "new"
+      end
     else
-      flash.now[:notice] = "Failed to create."
+      flash.now[:notice] = "Failed to create new file stat"
       render "new"
     end
   end

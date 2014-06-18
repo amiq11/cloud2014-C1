@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 	user = User.find_by_name params[:name]
 	if user && user.authenticate(params[:password])
 		session[:user_id] = user.id
-		redirect_to session_path
+		redirect_to root_path
 	else
       		flash.now.alert = "もう一度やり直してんなー"
       		render "new"
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     @current_user = nil
-    redirect_to session_path
+    redirect_to root_path
 
   end
 

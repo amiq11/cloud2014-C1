@@ -20,6 +20,7 @@ class EditorController < ApplicationController
   def create
     attr = params.require(:file_stat).permit(:name)
     @file_stat = FileStat.create(attr)
+    @file_stat.path = Save_dir + @file_stat.name
     if @file_stat.save
       begin
         f = open(Save_dir + @file_stat.name, "w")

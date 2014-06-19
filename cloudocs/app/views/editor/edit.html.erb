@@ -1,47 +1,47 @@
 <h1>Edit <%= @file.name -%></h1>
 
 <p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
+<p>Macなら<strong>Command-s</strong>, Windowsなら<strong>Ctrl-s</strong>で保存</p>
+	<div id="post_status"></div>
 
 <% if File.readable? @file.path %>
 	<div id="editor-div" style="height: 500px; width: 500px"><%= File.open(@file.path, "r").read -%></div>
-	<% #TODO: Syntax highlight and Editor %>
 
-	<%= form_tag('/editor/save/' + @file.id.to_s) do%>
-		<%= text_area_tag("text") %>
-		<%= submit_tag("Save", :name=>"Save", :onClick=>"set_flag();") %>
-		<%= submit_tag("Cancel", :name=>"Cancel") %>
-	<% end %>
+	<% @ext = @file.name.split(".")[-1] %>
 
-	<% ext = @file.name.split(".")[-1] %>
 <% else %>
 	<p>This is not file!</p>
 <% end %>
 
-<%= javascript_tag do%>
-	var flag = false;
+<%= link_to "一覧に戻る", "/editor/index" -%>
 
+<%= javascript_tag do%>
 	window.onload = function() {
-		document.getElementById('text').style.display = 'none';
 		var editor = ace.edit("editor-div");
 		editor.setTheme("ace/theme/twilight");
-		editor.getSession().setMode("ace/mode/<%= ext %>");
 		editor.setKeyboardHandler("ace/keyboard/vim");
+		editor.getSession().setMode("ace/mode/<%= @ext %>");
+		editor.focus();
 
-		var buffer;
-		editor.getSession().on("change", function(){
-			document.getElementById('text').value = editor.getSession().getValue();
-		});
-
-	};
-
-	function set_flag() {
-		flag = true;
-	};
-
-
-	window.onbeforeunload = function() {
-		if (flag == false) {
-			return "本当に離れますか？";
+		function set_message(message) {
+			$("#post_status").html(message).fadeIn("10000");
 		}
+			
+
+		editor.commands.addCommand({
+			Name: "savefile",
+			bindKey: {
+				win: "Ctrl-S",
+				mac: "Command-S"
+			},
+			exec: function(editor) {
+				$.ajax({
+					url: '/editor/save/<%= @file.id.to_s -%>',
+					type: 'post',
+					data: {body: editor.getSession().getValue()}
+				});
+			}
+		});
 	};
+
 <% end %>

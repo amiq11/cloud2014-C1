@@ -10,7 +10,7 @@ one:
 
 two:
   name: test2.py
-  path: /home/akerue/Desktop/test2.txt
+  path: /home/akerue/Desktop/test2.py
   password: password
   user_id: 1
   private: false

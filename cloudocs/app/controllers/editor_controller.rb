@@ -1,4 +1,6 @@
 class EditorController < ApplicationController
+	protect_from_forgery :except => [:save]
+
 	def index
 	end
 
@@ -16,11 +18,12 @@ class EditorController < ApplicationController
 	end
 
 	def save
+		return redirect_to '/404.html' unless request.xhr?
 		@file = FileStat.find(params[:id])
-		if params[:Save]
-			File.write(@file.path, params[:text])
+		if params[:body]
+			File.open(@file.path, "w") do |file|
+				file.write params[:body]
+			end
 		end
-		redirect_to :action => "index"
 	end
-
 end

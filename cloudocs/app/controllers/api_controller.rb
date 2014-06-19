@@ -34,7 +34,6 @@ class ApiController < ActionController::Base
       # pull 
       result = system("git pull")
       if result
-
         r = system("touch tmp/restart.txt")
         txt = (r) ? "SUCCEEDED" : "FAILED"
         render :text => "DEPLOY SUCCEEDED and SERVER RESTART #{txt}", :status => 200

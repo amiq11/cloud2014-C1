@@ -1,11 +1,14 @@
-<h1>Edit <%= @file.name -%></h1>
+<%= stylesheet_link_tag "edit_style" %>
+<h1><%= @file.name -%></h1>
 
-<p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
-<p>Macなら<strong>Command-s</strong>, Windowsなら<strong>Ctrl-s</strong>で保存</p>
-	<div id="post_status"></div>
+<div id="description">
+	<p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
+	<p>Macなら<strong>Command-s</strong>, Windowsなら<strong>Ctrl-s</strong>で保存</p>
+</div>
+<%= link_to "一覧に戻る", "/editor/index", :id => :index -%>
 
 <% if File.readable? @file.path %>
-	<div id="editor-div" style="height: 500px; width: 500px"><%= File.open(@file.path, "r").read -%></div>
+	<div id="editor-div"><%= File.open(@file.path, "r").read -%></div>
 
 	<% @ext = @file.name.split(".")[-1] %>
 
@@ -13,7 +16,6 @@
 	<p>This is not file!</p>
 <% end %>
 
-<%= link_to "一覧に戻る", "/editor/index" -%>
 
 <%= javascript_tag do%>
 	window.onload = function() {

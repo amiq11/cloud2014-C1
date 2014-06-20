@@ -10,15 +10,14 @@
     <td><%= file.name %></td>
     <td><%= file.path %></td>
     <td><%= file.user_id %></td>
-<!--<td><A Href="http://localhost:3000/editor/edit/<%= file.id %>">edit</A></td> -->
-    <td><%= link_to"edit" , :action=>"edit" , :id=> file.id =%></td>
+    <td><%= link_to "edit" , :action=>"edit" , :id=> file.id =%></td>
   </tr>
 <% end %>
 </table>
 <br>
 <br>
-<b><A Href="http://localhost:3000/editor/create">CREATE</A></b>
+<b><%= link_to "CREATE" , :action=>"create" =%></b>
 <br>
 <br>
-<b><%= link_to"LOG OUT" ,session_path,  :confirm=>"LOG OUT OK?" , :method=>delete =%></b>
+<b><%= link_to "LOG OUT" , session_path,  :confirm=>"LOG OUT OK?" , :method=>delete =%></b>
 

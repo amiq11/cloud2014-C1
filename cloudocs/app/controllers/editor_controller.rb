@@ -17,9 +17,6 @@ class EditorController < ApplicationController
   	@file = FileStat.find(params[:id])
   end
   
-  def create
-  end
-  
   def save
   	return redirect_to '/404.html' unless request.xhr?
   	@file = FileStat.find(params[:id])
@@ -41,12 +38,12 @@ class EditorController < ApplicationController
         redirect_to editor_index_path, :notice => "Created!"
       rescue
         FileStat.find(:last, :conditions => {:name => @file_stat.name}).destroy
-        flash.now[:notice] = "Failed to create new file entity."
-        render "new"
+        flash[:notice] = "Failed to create new file entity."
+        redirect_to :action => "new"
       end
     else
-      flash.now[:notice] = "Failed to create new file stat"
-      render "new"
+      flash[:notice] = "Failed to create new file stat."
+      redirect_to :action => "new"
     end
   end
 end

@@ -1,2 +1,49 @@
-<h1>Editor#edit</h1>
-<p>Find me in app/views/editor/edit.html.erb</p>
+<%= stylesheet_link_tag "edit_style" %>
+<h1><%= @file.name -%></h1>
+
+<div id="description">
+	<p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
+	<p>Macなら<strong>Command-s</strong>, Windowsなら<strong>Ctrl-s</strong>で保存</p>
+</div>
+<%= link_to "一覧に戻る", "/editor/index", :id => :index -%>
+
+<% if File.readable? @file.path %>
+	<div id="editor-div"><%= File.open(@file.path, "r").read -%></div>
+
+	<% @ext = @file.name.split(".")[-1] %>
+
+<% else %>
+	<p>This is not file!</p>
+<% end %>
+
+
+<%= javascript_tag do%>
+	window.onload = function() {
+		var editor = ace.edit("editor-div");
+		editor.setTheme("ace/theme/twilight");
+		editor.setKeyboardHandler("ace/keyboard/vim");
+		editor.getSession().setMode("ace/mode/<%= @ext %>");
+		editor.focus();
+
+		function set_message(message) {
+			$("#post_status").html(message).fadeIn("10000");
+		}
+			
+
+		editor.commands.addCommand({
+			Name: "savefile",
+			bindKey: {
+				win: "Ctrl-S",
+				mac: "Command-S"
+			},
+			exec: function(editor) {
+				$.ajax({
+					url: '/editor/save/<%= @file.id.to_s -%>',
+					type: 'post',
+					data: {body: editor.getSession().getValue()}
+				});
+			}
+		});
+	};
+
+<% end %>

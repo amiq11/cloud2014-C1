@@ -33,8 +33,10 @@ class ApiController < ActionController::Base
       end
       # pull 
       result = system("git pull")
-      if result 
-        render :text => "DEPLOY SUCCEEDED", :status => 200
+      if result
+        r = system("touch tmp/restart.txt")
+        txt = (r) ? "SUCCEEDED" : "FAILED"
+        render :text => "DEPLOY SUCCEEDED and SERVER RESTART #{txt}", :status => 200
       else
         render :text => "INTERNAL SERVER ERROR (DEPLOY FAILED)", :status => 500
       end

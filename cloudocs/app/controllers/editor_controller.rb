@@ -42,7 +42,14 @@ class EditorController < ApplicationController
         redirect_to :action => "new"
       end
     else
-      flash[:notice] = "Failed to create new file stat."
+      case @file_stat.errors.messages.fetch(:name)[0]
+      when "has already been taken"
+        flash[:notice] = "\"" + @file_stat.name + "\" " + "is already exists." 
+      when "is invalid"
+        flash[:notice] = "File name must not contain \"\/\"." 
+      else
+        flash[:notice] = "Failed to create new file stat."
+      end
       redirect_to :action => "new"
     end
   end

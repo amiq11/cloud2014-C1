@@ -7,7 +7,7 @@ skip_before_filter :login_required
 
   def create
 	user = User.find_by_name params[:name]
-	if user && user.authenticate(params[:password]) && user.createvalid == true
+	if user && user.authenticate(params[:password])
 		session[:user_id] = user.id
 		redirect_to :controller => 'editor', :action => 'index'
 	else

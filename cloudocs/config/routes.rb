@@ -12,6 +12,16 @@ Cloudocs::Application.routes.draw do
   post "api/payload" => "api#payload"
   resource :session
   resource :users
+
+
+
+
+  namespace :admin do
+    root to: "top#index"
+    resources :users
+    resources :session
+    resources :editor
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

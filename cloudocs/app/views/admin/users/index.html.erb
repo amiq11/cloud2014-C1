@@ -1,0 +1,21 @@
+<% if @users.present? %>
+<table class="list">
+ <tr>
+  <th>名前</th>
+  <th>Email</th>
+  <th>操作</th>
+ </tr>
+ <% @users.each do |user| %>
+ <tr>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td>
+      <%= link_to "決定", [:edit, :admin, user], confirm: "あくせぷとしちゃうよ？" %> |
+      <%= link_to "削除", [:admin, user], method: :delete, confirm: "りじぇくとしちゃうよ？" %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<% else %>
+<p>中に誰もいませんよ？</p>
+<% end %>

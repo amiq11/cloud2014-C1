@@ -4,7 +4,8 @@ class ApiController < ActionController::Base
   # handling webhook
   def payload
     if request.post? #### POST REQUEST
-      secret = "KNuPlc3rw69V7kBV"
+      # get secret from environment variables
+      secret = ENV['SECRET_TOKEN']
       # verify signature
       if verify_signature(request.body.read, secret) == 500 
         render :text => "invalid signature", :status => 403

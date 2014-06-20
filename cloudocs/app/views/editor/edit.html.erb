@@ -5,7 +5,7 @@
 	<p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
 	<p>Macなら<strong>Command-s</strong>, Windowsなら<strong>Ctrl-s</strong>で保存</p>
 </div>
-<%= link_to "一覧に戻る", "/editor/index", :id => :index -%>
+<%= link_to "一覧に戻る", :action => "index" -%>
 
 <% if File.readable? @file.path %>
 	<div id="editor-div"><%= File.open(@file.path, "r").read -%></div>

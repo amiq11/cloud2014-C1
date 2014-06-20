@@ -1,11 +1,8 @@
 class EditorController < ApplicationController
-
+  protect_from_forgery :except => [:save]
   Save_dir = "/mnt/cloudocs-volume/documents/"
 
   def index
-  end
-
-  def login
   end
 
   def new
@@ -14,8 +11,22 @@ class EditorController < ApplicationController
 
   def sign_up
   end
-
+  
   def edit
+  	@file = FileStat.find(params[:id])
+  end
+  
+  def create
+  end
+  
+  def save
+  	return redirect_to '/404.html' unless request.xhr?
+  	@file = FileStat.find(params[:id])
+  	if params[:body]
+  		File.open(@file.path, "w") do |file|
+  			file.write params[:body]
+  		end
+  	end
   end
 
   def create
@@ -37,5 +48,4 @@ class EditorController < ApplicationController
       render "new"
     end
   end
-
 end

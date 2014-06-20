@@ -6,7 +6,7 @@ Cloudocs::Application.routes.draw do
   get "editor/login"
   get "editor/sign_up"
   get "editor/edit/:id" => "editor#edit"
-  get "editor/create"
+  post "editor/create"
   post "editor/save/:id" => "editor#save"
   get "api/get_file"
   get "api/payload"

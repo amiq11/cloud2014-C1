@@ -3,6 +3,7 @@ class EditorController < ApplicationController
   Save_dir = "/mnt/cloudocs-volume/documents/"
 
   def index
+    @file_stats = FileStat.find(:all)
   end
 
   def new
@@ -14,9 +15,6 @@ class EditorController < ApplicationController
   
   def edit
   	@file = FileStat.find(params[:id])
-  end
-  
-  def create
   end
   
   def save
@@ -37,15 +35,22 @@ class EditorController < ApplicationController
       begin
         f = open(Save_dir + @file_stat.name, "w")
         f.close
-        redirect_to editor_index_path, :notice => "Created!"
+        redirect_to editor_index_path
       rescue
         FileStat.find(:last, :conditions => {:name => @file_stat.name}).destroy
-        flash.now[:notice] = "Failed to create new file entity."
-        render "new"
+        flash[:notice] = "Failed to create new file entity."
+        redirect_to :action => "new"
       end
     else
-      flash.now[:notice] = "Failed to create new file stat"
-      render "new"
+      case @file_stat.errors.messages.fetch(:name)[0]
+      when "has already been taken"
+        flash[:notice] = "\"" + @file_stat.name + "\" " + "is already exists." 
+      when "is invalid"
+        flash[:notice] = "File name must not contain \"\/\"." 
+      else
+        flash[:notice] = "Failed to create new file stat."
+      end
+      redirect_to :action => "new"
     end
   end
 end

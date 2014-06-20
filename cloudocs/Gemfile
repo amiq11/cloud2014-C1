@@ -46,3 +46,4 @@ gem 'ace-rails-ap'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'mysql2'

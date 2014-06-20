@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 class SessionsController < ApplicationController
-
+skip_before_filter :login_required
   def show
     render "new"
   end
@@ -8,7 +9,7 @@ class SessionsController < ApplicationController
 	user = User.find_by_name params[:name]
 	if user && user.authenticate(params[:password])
 		session[:user_id] = user.id
-		redirect_to root_path
+		redirect_to :controller => 'editor', :action => 'index'
 	else
       		flash.now.alert = "もう一度やり直してんなー"
       		render "new"

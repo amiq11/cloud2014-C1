@@ -1,10 +1,12 @@
 Cloudocs::Application.routes.draw do
   root to: "top#index"
+  resources :editor
   get "editor/index"
   get "editor/login"
   get "editor/sign_up"
-  get "editor/edit"
+  get "editor/edit/:id" => "editor#edit"
   get "editor/create"
+  post "editor/save/:id" => "editor#save"
   get "api/get_file"
   get "api/payload"
   post "api/payload" => "api#payload"

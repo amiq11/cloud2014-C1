@@ -35,7 +35,7 @@ class EditorController < ApplicationController
       begin
         f = open(Save_dir + @file_stat.name, "w")
         f.close
-        redirect_to editor_index_path, :notice => "Created!"
+        redirect_to editor_index_path
       rescue
         FileStat.find(:last, :conditions => {:name => @file_stat.name}).destroy
         flash[:notice] = "Failed to create new file entity."

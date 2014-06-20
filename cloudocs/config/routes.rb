@@ -1,6 +1,5 @@
 Cloudocs::Application.routes.draw do
   root to: "top#index"
-  resources :editor
   get "editor/index"
   get "editor/login"
   get "editor/sign_up"

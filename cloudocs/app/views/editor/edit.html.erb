@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag "edit_style" %>
 <h1><%= @file.name -%></h1>
-<div id="post_status"></div>
+<div id="post_status" style="height: 20px; display:block;">   </div>
 
 <div id="description">
 	<p>※ vim キーバインドです！<S>emacs?何それおいしいの?</S></p>
@@ -38,8 +38,13 @@
 					type: 'post',
 					data: {body: editor.getSession().getValue()},
 					success: function() {
-						$("#post_status").css("display", "inline");
-						$("#post_status").html("保存しました").fadeOut("2000000");
+						$("#post_status").css("display", "block");
+						$("#post_status").css("height", "20px");
+						$("#post_status").html("保存しました").fadeOut("2000000").queue(function() {
+							$("#post_status").css("display", "block").dequeue();
+							$("#post_status").html("		").dequeue();
+							});
+						$("#post_status").css("height", "20px");
 					}
 				});
 			}

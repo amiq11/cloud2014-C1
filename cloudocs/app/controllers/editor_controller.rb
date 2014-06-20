@@ -3,6 +3,7 @@ class EditorController < ApplicationController
   Save_dir = "/mnt/cloudocs-volume/documents/"
 
   def index
+    @file_stats = FileStat.find(:all)
   end
 
   def new

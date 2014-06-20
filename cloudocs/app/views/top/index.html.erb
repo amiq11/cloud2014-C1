@@ -2,9 +2,9 @@
 <p>コニチワ</p>
 
 <% if current_user == nil %>
-  <%= link_to "ログインするのです！！", session_path, :confirm => 'これはゲームであっても遊びではない' %><br>
+  <%= link_to "ログインするのです！！", session_path %><br>
   <%= link_to "新しく作るのん", new_users_path %><br>
 <% else %>
   <%= link_to '管理ぺーじ', :admin_users %><br>
-  <%= link_to 'ログアウト', session_path, :confirm => 'ログアウトできます', :method => :delete %>
+  <%= link_to 'ログアウト', session_path, :method => :delete %>
 <% end %>

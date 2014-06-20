@@ -49,6 +49,12 @@ class ApiController < ActionController::Base
 
 
   def get_file
+    if request.post? #### POST REQUEST
+	  puts request
+      #req = request.body.read ? JSON.parse(request.body.read) : nil
+	  updated_file = FileStat.find(request['id'])
+	  render :json => {'body' => File.open(updated_file.path, "r").read}
+	end
   end
 
 
